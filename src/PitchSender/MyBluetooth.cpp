@@ -32,6 +32,7 @@ int32_t get_data_frames(Frame *frame, int32_t frame_count) {
     static float m_angle = 0.0;
     float m_amplitude = 10000.0;  // -32,768 to 32,767
     float m_phase = 0.0;
+
     // fill the channel data
     for (int sample = 0; sample < frame_count; ++sample) {
         frame[sample].channel1 = m_amplitude * sin(m_angle + m_phase);
@@ -39,8 +40,6 @@ int32_t get_data_frames(Frame *frame, int32_t frame_count) {
         m_angle += deltaAngle;
         if (m_angle > pi_2) m_angle -= pi_2;
     }
-    // to prevent watchdog
-    delay(1);
 
     return frame_count;
 }
@@ -60,20 +59,22 @@ enum esp_a2d_connection_state_t {
 
 // for esp_a2d_connection_state_t see https://docs.espressif.com/projects/esp-idf/en/latest/esp32/api-reference/bluetooth/esp_a2dp.html#_CPPv426esp_a2d_connection_state_t
 void connection_state_changed(esp_a2d_connection_state_t state, void *ptr){
+  Serial.println();
   Serial.println(a2dp_source.to_str(state));
 }
 
 
 void bt_init(const char *bt_name) {
-  bt_set_sound(32.703 * pow(2, 3), 1.0);
-  a2dp_source.set_auto_reconnect(true);
+  a2dp_source.set_auto_reconnect(false);
   a2dp_source.set_data_callback_in_frames(get_data_frames);
   a2dp_source.set_on_connection_state_changed(connection_state_changed);
   a2dp_source.set_volume(50);
   a2dp_source.start(bt_name);
-  delay(100);
+  /*
   while(!a2dp_source.is_connected()) {
     Serial.print(".");
     delay(1000);
   }
+  */
+  a2dp_source.set_auto_reconnect(true);
 }

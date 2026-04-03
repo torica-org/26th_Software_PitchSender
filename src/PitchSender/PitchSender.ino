@@ -9,7 +9,8 @@
 #include "Frequency.h"
 #include "MyIMU.h"
 
-constexpr float TOLERANCE = 3.0;
+// 許容誤差（±TOLERANCE[deg]まで許容する）.
+constexpr float TOLERANCE = 3.0; // degree[°]
 
 enum {
   TAIL_UP,
@@ -19,13 +20,13 @@ enum {
 
 void setup() {
   Serial.begin(115200);
-  bt_init("FS-BTHD01");
+  bt_init("BTW13X");
   imu_init();
 }
 
 void loop() {
   imu_refresh_euler();
-  // Serial.printf("%.5f %.5f %.5f\n", angles.roll, angles.pitch, angles.yaw);
+  Serial.printf("%.5f %.5f %.5f\n", angles.roll, angles.pitch, angles.yaw);
 
   String status;
 

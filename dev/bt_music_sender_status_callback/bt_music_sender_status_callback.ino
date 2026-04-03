@@ -49,12 +49,13 @@ void connection_state_changed(esp_a2d_connection_state_t state, void *ptr){
 
 
 void setup() {
+  // a2dp_source.clean_last_connection();
   Serial.begin(115200);
-  a2dp_source.set_auto_reconnect(true);
   a2dp_source.set_on_connection_state_changed(connection_state_changed);
   a2dp_source.set_data_callback_in_frames(get_data_frames);
   a2dp_source.set_volume(30);
   a2dp_source.start("BTW13X");
+  a2dp_source.set_auto_reconnect(true);
 }
 
 void loop() {
