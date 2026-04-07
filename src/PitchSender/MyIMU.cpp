@@ -23,8 +23,8 @@
 auto& mySerial = Serial;
 auto& myWire = Wire;
 
-constexpr uint8_t SDA_PIN = 21;
-constexpr uint8_t SCL_PIN = 22;
+constexpr uint8_t SDA_PIN = 21; // 青
+constexpr uint8_t SCL_PIN = 22; // 黄
 constexpr int CLOCK_SPEED = 400000;
 
 constexpr uint8_t LSM6_ADDR_GND = 0x6A;  // J3を短絡したとき(SDO/SA0 : LOW)のアドレス.

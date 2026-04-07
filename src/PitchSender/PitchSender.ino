@@ -20,13 +20,13 @@ enum {
 
 void setup() {
   Serial.begin(115200);
-  bt_init("BTW13X");
+  bt_init("C2");
   imu_init();
 }
 
 void loop() {
+
   imu_refresh_euler();
-  Serial.printf("%.5f %.5f %.5f\n", angles.roll, angles.pitch, angles.yaw);
 
   String status;
 
@@ -43,24 +43,36 @@ void loop() {
     status = "LEVEL";
   }
 
-  static unsigned long pre_time = 0;
-  unsigned long now_time = millis();
-  if (now_time - pre_time >= 500) {
-    Serial.println(status);
-    pre_time = now_time;
-  }
+  float freq = 0.0;
+  float interval = 0.0;
 
   switch (attitude) {
     case TAIL_UP: {
-      bt_set_sound(frequency_get("G4"), 1.0);
+      freq = frequency_get("G5");
+      interval = 0.05;
+      break;
     }
     case LEVEL: {
-      bt_set_sound(frequency_get("C4"), 1.0);
+      freq = frequency_get("C5");
+      interval = 0.5;
+      break;
     }
     case TAIL_DOWN: {
-      bt_set_sound(frequency_get("G3"), 1.0);
+      freq = frequency_get("A4");
+      interval = 0.05;
+      break;
     }
   }
+
+  bt_set_sound(freq, interval);
+
+  static unsigned long prev = 0;
+  unsigned long cur = millis();
+  if (cur - prev > 1000) {
+    prev = cur;
+    Serial.printf("[%s | %s]  (%.5f, %.5f, %.5f)\n", bt_status, status, angles.roll, angles.pitch, angles.yaw);
+  }
+
   delayMicroseconds(10);
 }
 
