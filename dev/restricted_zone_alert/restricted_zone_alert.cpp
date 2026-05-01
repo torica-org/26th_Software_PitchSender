@@ -46,6 +46,6 @@ bool checkInsideArea(Point p) {
 }
 
 // 禁止エリアまでの予想時間を計算
-void calc_time_to_reach(){
+float calc_time_to_reach(){
 
 }
