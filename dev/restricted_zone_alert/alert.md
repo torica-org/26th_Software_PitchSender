@@ -15,7 +15,8 @@
 
 上図において次式が成立する．
 ```math
-\overrightarrow{\mathrm{B_{k-1} B_{k}}} \times \overrightarrow{\mathrm{B_{k-1}P}} = |\overrightarrow{\mathrm{B_{k-1} B_{k}}}||\overrightarrow{\mathrm{B_{k-1}P}}| \sin \theta
+
+\overrightarrow{\mathrm{B_{k-1} B_{k}}} \times \overrightarrow{\mathrm{B_{k-1}P}} = \left| \overrightarrow{\mathrm{B_{k-1} B_{k}}} \right|  \left| \overrightarrow{\mathrm{B_{k-1}P}} \right| \sin \theta
 ```
 反時計回りのベクトルで飛行禁止区域を囲んでいるので，境界線ベクトルの左側（飛行可能区域）にいるとき$`\theta>0`$．言い換えると飛行可能区域内にいるということは$`\sin \theta>0`$である．
 
@@ -44,14 +45,23 @@
 ### 禁止区域到着予想計算
 現在地から最も近い境界線までの到達予想時間を計算する．
 
-使用するGPSデータ：
-`data_air_gps_groundspeed_ms`, `data_air_gps_heading_deg`．
+| GPSデータ等マイコンから取得する値  | 図中のパラメータ |
+| ------------- | ------------- |
+| `data_air_gps_groundspeed_ms`  | $`v`$  |
+| `data_air_gps_heading_deg`  | $`\alpha`$  |
 
-到達予想時間(time to reach)は
+他に定数として境界線用に設定した緯度経度を用いる．
+
+
+
+ある境界線付近の点$`\mathrm{B_{k-1}}`$，$`\mathrm{B_k}`$について考える．機体と境界線の位置関係を以下の図に示した．
+<img src="https://raw.githubusercontent.com/TORICA-Org/26th_PitchSender/refs/heads/dev/dev/restricted_zone_alert/figures/fig3.svg"/>
+
+機体から境界線までの最短距離は，機体から境界線まで下した垂線の長さに等しい．これとGPSから受信した対地速度と方位を組み合わせることで速度ベクトルを得ることができ，これにより次式で到達予想時間(time to reach)が求められる．
+
 ```math
-t = \dfrac{L_{\mathrm{B_{k-1} B_k }} \sin \theta_{\mathrm{B_k P} }}{v \sin(\alpha - \beta)}
+t = \dfrac{\mathrm{L_{B_k P }} \cdot \sin \theta_{\mathrm{\phi_k} }}{v \sin(\alpha - \theta_k)}
 ```
-である．
 
 
 
