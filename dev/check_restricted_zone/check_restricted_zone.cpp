@@ -31,6 +31,7 @@ bool isInsideArea(double lat, double lon) {
     int k_prev = k; 
     int k_curr = k + 1;
     if (k_curr == NUM_VERTICES) {
+      // BnB1ベクトルのために例外処理
       k_curr = 0;
     }
 
@@ -42,7 +43,7 @@ bool isInsideArea(double lat, double lon) {
     double Bk1_P_lon = lon - boundary[k_prev].lon;
     double Bk1_P_lat = lat - boundary[k_prev].lat;
 
-    // 外積 Z = (Bx-Ax)(Py-Ay) - (By-Ay)(Px-Ax)
+    // 外積 Z = (Bk.x - Bk-1.x)(P.y - Bk-1.y) - (Bk.y - Bk-1.y)(P.x - Bk-1.x)
     double z = (Bk1_Bk_lon * Bk1_P_lat) - (Bk1_Bk_lat * Bk1_P_lon);
 
     // 1つでも負があれば境界線の右側（禁止区域）にいる
