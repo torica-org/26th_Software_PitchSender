@@ -1,4 +1,4 @@
-# 26th_PitchSender
+# 26th_Software_PitchSender
 テール保持者にBluetoothイヤホンを介してピッチを伝えるための装置
 
 # 構成
