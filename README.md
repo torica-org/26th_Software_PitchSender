@@ -7,12 +7,17 @@
 
 これら2つを搭載した基板を桁に直接巻き付け，メインの電装から電源供給のみ受ける．
 
-# 動作
+# 動作(new)
+1. BNO055を使用して，オイラー角を取得．
+2. グローバルに宣言されたオイラー角用の構造体（angles）を更新
+3. 取得したピッチ（angles.pitch）に応じて，BTイヤホンに送信する音の周波数（音程）と間隔を変更．
+
+# 動作(old)
 1. LSM6DSV16Xの高度なセンサーフュージョン機能（Sensor Fusion Low-Power : SFLP）を使用して，クオータニオンを取得．
 2. クオータニオンをオイラー角に変換し，グローバルに宣言されたオイラー角用の構造体（angles）を更新
 3. 取得したピッチ（angles.pitch）に応じて，BTイヤホンに送信する音の周波数（音程）と間隔を変更．
 
-# ソフトウェアの詳細
+# ソフトウェアの詳細(old)
 - センサーフュージョンに関する公式ドキュメント -> https://community.st.com/t5/mems-and-sensors/how-lsm6dsv16x-enables-sensor-fusion-low-power-sflp-algorithm/ta-p/585084
 - センサーフュージョンのサンプルコード -> https://github.com/STMicroelectronics/STMems_Standard_C_drivers/blob/master/lsm6dsv16x_STdC%2Fexamples%2Flsm6dsv16x_sensor_fusion.c
 - LSM6DSV16XのSFLPにより計算されたクオータニオンはFIFOに保存される．
