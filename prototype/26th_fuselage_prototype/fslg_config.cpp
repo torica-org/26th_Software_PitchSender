@@ -1,4 +1,4 @@
-#include "psd_config.h"
+#include "fslg_config.h"
 
 // 胴体桁基板ピン設定
 

@@ -5,7 +5,7 @@ const float airspeed_factor  = 1.0; // 対気速度の補正係数．
 
 
 // スピーカー用ピン設定
-#include "Fuselage_config.h"
+#include "fslg_config.h"
 void speaker_init(){
     pinMode(SPK, OUTPUT);
 }
